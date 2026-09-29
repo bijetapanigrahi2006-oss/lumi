@@ -56,6 +56,7 @@ const display = createDisplay({
   angleTag: $('angleTag'),
   angleKey: $('angleKey'),
   logoSpark,
+  onLayout: () => scenery.avoid([$('expr'), $('main'), $('preview'), $('sciBtn')]),
 });
 
 const history = initHistory(
@@ -79,7 +80,10 @@ initTheme({
   modeBtn: $('modeBtn'),
   logoSpark,
   toast: $('toast'),
-  onChange: () => scenery.render(true),
+  onChange: () => {
+    scenery.render(true);
+    display.fit();
+  },
   onPick: (el, name) => {
     scenery.jelly(el);
     scenery.burst(...centerOf(el), 8, 1.3);

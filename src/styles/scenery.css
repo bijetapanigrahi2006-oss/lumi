@@ -156,6 +156,7 @@ body {
   width: var(--sz);
   height: var(--sz);
   rotate: var(--rot, 0deg);
+  transition: opacity 0.25s ease;
   pointer-events: auto;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -185,6 +186,11 @@ body {
   }
 }
 
+.st.tuck {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .board {
   position: absolute;
   inset: 0;
@@ -208,7 +214,7 @@ body {
   pointer-events: none;
 }
 
-.e1 { --sz: 44px; --rot: 14deg; top: 30%; right: -13px; --dur: 8s; --del: -4s; }
+.e1 { --sz: 42px; --rot: 14deg; top: 16%; right: -13px; --dur: 8s; --del: -4s; }
 
 .bg-st:nth-child(1) { --sz: 96px; --rot: -12deg; top: 12%; left: 8%; }
 .bg-st:nth-child(2) { --sz: 72px; --rot: 10deg; top: 58%; left: 14%; --del: -2s; }

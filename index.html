@@ -70,14 +70,22 @@
       <header class="bar">
         <div class="brand">
           <svg class="logo amb" id="logo" viewBox="0 0 32 32" aria-hidden="true">
-            <rect class="logo-body" x="4.5" y="5.5" width="19" height="24" rx="5.5" />
-            <rect class="logo-screen" x="8" y="9" width="12" height="5.5" rx="1.8" />
-            <circle class="logo-key" cx="10" cy="19" r="1.45" />
-            <circle class="logo-key" cx="14" cy="19" r="1.45" />
-            <circle class="logo-key" cx="18" cy="19" r="1.45" />
-            <circle class="logo-key" cx="10" cy="24" r="1.45" />
-            <circle class="logo-key" cx="14" cy="24" r="1.45" />
-            <circle class="logo-key" cx="18" cy="24" r="1.45" />
+            <defs>
+              <linearGradient id="logoBody" x1="0" y1="0" x2=".7" y2="1"><stop class="logo-a" offset="0" /><stop class="logo-b" offset="1" /></linearGradient>
+            </defs>
+            <rect class="logo-depth" x="4.5" y="7.6" width="19" height="23" rx="5.5" />
+            <rect x="4.5" y="5.5" width="19" height="23" rx="5.5" fill="url(#logoBody)" />
+            <path class="logo-gloss" d="M8.2 7.9c2.2-.8 5-.9 7.6-.6" />
+            <rect class="logo-screen" x="7.4" y="8.8" width="13.2" height="7.2" rx="2.3" />
+            <circle class="logo-eye" cx="12" cy="11.9" r=".95" />
+            <circle class="logo-eye" cx="16" cy="11.9" r=".95" />
+            <path class="logo-smile" d="M12.9 13.5q1.1 1.1 2.2 0" />
+            <circle class="logo-key" cx="10" cy="19.8" r="1.4" />
+            <circle class="logo-key" cx="10" cy="24.2" r="1.4" />
+            <circle class="logo-key" cx="14" cy="19.8" r="1.4" />
+            <circle class="logo-key" cx="14" cy="24.2" r="1.4" />
+            <circle class="logo-key" cx="18" cy="19.8" r="1.4" />
+            <circle class="logo-key" cx="18" cy="24.2" r="1.4" />
             <path class="logo-spark" d="M25 1c.45 3.5 2.5 5.55 6 6-3.5.45-5.55 2.5-6 6-.45-3.5-2.5-5.55-6-6 3.5-.45 5.55-2.5 6-6z" />
           </svg>
           <span class="wordmark amb" aria-label="Lumi"><span>L</span><span>u</span><span>m</span><span>i</span></span>

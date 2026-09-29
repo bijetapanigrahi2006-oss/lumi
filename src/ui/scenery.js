@@ -164,6 +164,32 @@ export function initScenery({ board, edge, bgStickers, falls, garland, fxLayer, 
     });
   }
 
+  // ─── Keep the numbers clear ───────────────────────────────
+  // The visible box of an element's text (clipped to the element, since long lines scroll).
+  function textBox(el) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const t = range.getBoundingClientRect();
+    if (!t.width) return null;
+    const v = el.getBoundingClientRect();
+    return { left: Math.max(t.left, v.left), right: Math.min(t.right, v.right), top: t.top, bottom: t.bottom };
+  }
+
+  /** Fades out any sticker that would overlap the text in `els`. Uses untransformed boxes so animations never cause flicker. */
+  function avoid(els) {
+    const boxes = els.map(textBox).filter(Boolean);
+    for (const host of [board, edge]) {
+      const h = host.getBoundingClientRect();
+      for (const st of host.children) {
+        const l = h.left + st.offsetLeft;
+        const t = h.top + st.offsetTop;
+        const r = l + st.offsetWidth;
+        const b = t + st.offsetHeight;
+        st.classList.toggle('tuck', boxes.some((x) => l < x.right + 8 && r > x.left - 8 && t < x.bottom + 2 && b > x.top - 2));
+      }
+    }
+  }
+
   // ─── Idle: pause ambient animation after 30 s ─────────────
   let idleTimer;
   function wake() {
@@ -176,5 +202,5 @@ export function initScenery({ board, edge, bgStickers, falls, garland, fxLayer, 
   wake();
 
   render();
-  return { render, burst, confetti, celebrate, dizzy, jelly };
+  return { render, avoid, burst, confetti, celebrate, dizzy, jelly };
 }

@@ -3,7 +3,7 @@ import { preview } from '../engine/calculator.js';
 import { ERRORS, MINUS, OP_TEXT, tokenText, toParts, formatResult } from '../engine/format.js';
 import { calm, settle, sheen, sparkle, shake, twinkle } from './effects.js';
 
-const FIT_STEPS = [1, 0.84, 0.7, 0.58, 0.48];
+const FIT_STEPS = [1, 0.86, 0.74, 0.64, 0.55, 0.47, 0.4];
 
 export function resultHTML(n) {
   const p = toParts(n);
@@ -51,7 +51,7 @@ function popMode(prev, next) {
 }
 
 export function createDisplay(els) {
-  const { screen, expr, main, preview: previewEl, sr, sheenEl, sparklesEl, angleTag, angleKey, logoSpark } = els;
+  const { screen, expr, main, preview: previewEl, sr, sheenEl, sparklesEl, angleTag, angleKey, logoSpark, onLayout } = els;
 
   // Shrinks the big line step by step until it fits, then keeps the end in view.
   function fit() {
@@ -61,6 +61,7 @@ export function createDisplay(els) {
     }
     main.scrollLeft = main.scrollWidth;
     expr.scrollLeft = expr.scrollWidth;
+    onLayout?.();
   }
 
   function render(state, prev, key) {
