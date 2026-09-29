@@ -188,7 +188,7 @@
 }
 
 /* ─── Short windows (laptops, small phones): compact so the numbers always fit ─ */
-@media (max-height: 720px) and (orientation: portrait), (max-height: 720px) and (min-width: 700px) {
+@media (min-height: 541px) and (max-height: 720px) {
   .app {
     gap: 9px;
   }
@@ -256,7 +256,7 @@
 }
 
 /* Very short windows with the scientific panel open: the theme row steps aside. */
-@media (max-height: 640px) {
+@media (min-height: 541px) and (max-height: 640px) {
   .sci-open .themes {
     display: none;
   }
