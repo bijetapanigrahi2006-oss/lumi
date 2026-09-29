@@ -34,25 +34,15 @@
 @property --accent-2 { syntax: '<color>'; inherits: true; initial-value: #999; }
 @property --panel { syntax: '<color>'; inherits: true; initial-value: #fff; }
 @property --divider { syntax: '<color>'; inherits: true; initial-value: #eee; }
+@property --pattern { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --text-glow { syntax: '<color>'; inherits: true; initial-value: transparent; }
 
 :root {
-  /* Theme swatches for the picker dots (same in every theme). */
-  --sw-mono-a: #ffffff;
-  --sw-mono-b: #1a1a1a;
-  --sw-lavender-a: #dccfff;
-  --sw-lavender-b: #8e7be0;
-  --sw-strawberry-a: #ffd6e0;
-  --sw-strawberry-b: #e07a94;
-  --sw-matcha-a: #e0eacb;
-  --sw-matcha-b: #7f9e63;
-  --sw-blueberry-a: #cfe0f8;
-  --sw-blueberry-b: #f2be3a;
-
   transition-property: --bg, --glow-1, --glow-2, --text, --muted, --screen-top, --screen-bottom,
     --screen-edge, --screen-rim, --screen-shadow, --key-top, --key-bottom, --key-text, --fn-top,
     --fn-bottom, --fn-text, --op-top, --op-bottom, --op-text, --eq-top, --eq-bottom, --eq-text,
     --eq-glow, --sci-top, --sci-bottom, --sci-text, --rim, --shadow, --accent, --accent-2, --panel,
-    --divider;
+    --divider, --pattern, --text-glow;
   transition-duration: 0.4s;
   transition-timing-function: ease;
 }
@@ -91,6 +81,8 @@
   --accent-2: #9a9a9a;
   --panel: #fafaf9;
   --divider: rgba(0, 0, 0, 0.08);
+  --pattern: rgba(0, 0, 0, 0.055);
+  --text-glow: rgba(0, 0, 0, 0.08);
 }
 
 :root[data-theme="mono"][data-mode="dark"] {
@@ -126,6 +118,8 @@
   --accent-2: #8a8a8a;
   --panel: #0c0c0c;
   --divider: rgba(255, 255, 255, 0.08);
+  --pattern: rgba(255, 255, 255, 0.06);
+  --text-glow: rgba(255, 255, 255, 0.3);
 }
 
 /* ─── Lavender Haze ──────────────────────────────────────── */
@@ -162,6 +156,8 @@
   --accent-2: #eea0c8;
   --panel: #faf8fe;
   --divider: rgba(80, 60, 150, 0.1);
+  --pattern: rgba(117, 96, 214, 0.09);
+  --text-glow: rgba(117, 96, 214, 0.16);
 }
 
 :root[data-theme="lavender"][data-mode="dark"] {
@@ -197,6 +193,8 @@
   --accent-2: #ffc7e6;
   --panel: #1a1627;
   --divider: rgba(255, 255, 255, 0.07);
+  --pattern: rgba(183, 168, 255, 0.07);
+  --text-glow: rgba(183, 168, 255, 0.5);
 }
 
 /* ─── Strawberry Milk ────────────────────────────────────── */
@@ -233,6 +231,8 @@
   --accent-2: #ffb48f;
   --panel: #fff8f9;
   --divider: rgba(190, 80, 110, 0.1);
+  --pattern: rgba(224, 110, 140, 0.085);
+  --text-glow: rgba(212, 97, 127, 0.16);
 }
 
 :root[data-theme="strawberry"][data-mode="dark"] {
@@ -268,6 +268,8 @@
   --accent-2: #ffd1b3;
   --panel: #22161c;
   --divider: rgba(255, 255, 255, 0.07);
+  --pattern: rgba(245, 163, 185, 0.06);
+  --text-glow: rgba(245, 163, 185, 0.45);
 }
 
 /* ─── Matcha Latte ───────────────────────────────────────── */
@@ -304,6 +306,8 @@
   --accent-2: #b8906f;
   --panel: #fbf9f3;
   --divider: rgba(100, 85, 50, 0.1);
+  --pattern: rgba(101, 136, 71, 0.075);
+  --text-glow: rgba(101, 136, 71, 0.14);
 }
 
 :root[data-theme="matcha"][data-mode="dark"] {
@@ -339,6 +343,8 @@
   --accent-2: #e3c9ae;
   --panel: #171d16;
   --divider: rgba(255, 255, 255, 0.07);
+  --pattern: rgba(168, 204, 140, 0.05);
+  --text-glow: rgba(168, 204, 140, 0.4);
 }
 
 /* ─── Blueberry Butter ───────────────────────────────────── */
@@ -375,6 +381,8 @@
   --accent-2: #f2be3a;
   --panel: #f7fafe;
   --divider: rgba(60, 100, 170, 0.1);
+  --pattern: rgba(79, 127, 196, 0.08);
+  --text-glow: rgba(79, 127, 196, 0.16);
 }
 
 :root[data-theme="blueberry"][data-mode="dark"] {
@@ -410,4 +418,115 @@
   --accent-2: #ffd166;
   --panel: #121a2d;
   --divider: rgba(255, 255, 255, 0.07);
+  --pattern: rgba(143, 179, 240, 0.06);
+  --text-glow: rgba(143, 179, 240, 0.45);
+}
+
+/* ─── Melody (the musical theme) ─────────────────────────── */
+:root[data-theme="melody"][data-mode="light"] {
+  --bg: #fff3ec;
+  --glow-1: #ffd8cb;
+  --glow-2: #cdf2ec;
+  --text: #2b1e2e;
+  --muted: #74596a;
+  --screen-top: #ffffff;
+  --screen-bottom: #fff6f0;
+  --screen-edge: #f6ddd0;
+  --screen-rim: rgba(255, 255, 255, 0.95);
+  --screen-shadow: rgba(200, 90, 70, 0.16);
+  --key-top: #ffffff;
+  --key-bottom: #fff5ee;
+  --key-text: #3a2533;
+  --fn-top: #ffe6dc;
+  --fn-bottom: #ffd8ca;
+  --fn-text: #9c3525;
+  --op-top: #cff0eb;
+  --op-bottom: #b8e6df;
+  --op-text: #0c5a53;
+  --eq-top: #c93f30;
+  --eq-bottom: #a83224;
+  --eq-text: #ffffff;
+  --eq-glow: rgba(217, 72, 58, 0.4);
+  --sci-top: #fffaf6;
+  --sci-bottom: #fff1e9;
+  --sci-text: #694753;
+  --rim: rgba(255, 255, 255, 0.9);
+  --shadow: rgba(190, 80, 60, 0.18);
+  --accent: #d9483a;
+  --accent-2: #2bb5a8;
+  --panel: #fff9f5;
+  --divider: rgba(190, 80, 60, 0.1);
+  --pattern: rgba(217, 72, 58, 0.08);
+  --text-glow: rgba(217, 72, 58, 0.15);
+}
+
+:root[data-theme="melody"][data-mode="dark"] {
+  --bg: #120e22;
+  --glow-1: #3a1840;
+  --glow-2: #0e3340;
+  --text: #fff1f6;
+  --muted: #b9a5c6;
+  --screen-top: #1f1833;
+  --screen-bottom: #181229;
+  --screen-edge: #2e2447;
+  --screen-rim: rgba(255, 255, 255, 0.07);
+  --screen-shadow: rgba(0, 0, 0, 0.5);
+  --key-top: #251d3a;
+  --key-bottom: #1e172f;
+  --key-text: #f4e9ff;
+  --fn-top: #3a1f45;
+  --fn-bottom: #321a3c;
+  --fn-text: #ffa3cd;
+  --op-top: #123c45;
+  --op-bottom: #10333b;
+  --op-text: #7ff0e4;
+  --eq-top: #ff7fb6;
+  --eq-bottom: #f2569b;
+  --eq-text: #2a0616;
+  --eq-glow: rgba(255, 111, 174, 0.4);
+  --sci-top: #1b1530;
+  --sci-bottom: #18122a;
+  --sci-text: #cdb9e6;
+  --rim: rgba(255, 255, 255, 0.07);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --accent: #ff7bb8;
+  --accent-2: #56e6da;
+  --panel: #191230;
+  --divider: rgba(255, 255, 255, 0.07);
+  --pattern: rgba(255, 123, 184, 0.07);
+  --text-glow: rgba(255, 123, 184, 0.5);
+}
+
+/* ─── Sticker, fairy-light and theme-chip colors ────────────
+   Also usable as .th-<name> so each theme chip shows its own colors. */
+:root {
+  --st-edge: #ffffff;
+  --st-shadow: rgba(60, 40, 80, 0.2);
+}
+:root[data-mode="dark"] {
+  --st-shadow: rgba(0, 0, 0, 0.5);
+}
+:root[data-theme="mono"], .th-mono {
+  --st-1: #151515; --st-2: #3c3c3c; --st-3: #9a9a9a; --st-4: #ffffff; --st-ink: #151515; --st-blush: #d6d6d6;
+  --bulb-1: #fff3c4; --bulb-2: #ffffff; --bulb-3: #ffe39a; --chip-a: #ffffff; --chip-b: #1a1a1a;
+}
+:root[data-theme="lavender"], .th-lavender {
+  --st-1: #b9a5f7; --st-2: #f8b7d7; --st-3: #a6bdf7; --st-4: #fff0b3; --st-ink: #3b2f63; --st-blush: #ff9fc8;
+  --bulb-1: #c9b8ff; --bulb-2: #ffc2e3; --bulb-3: #fff0a8; --chip-a: #dccfff; --chip-b: #8e7be0;
+}
+:root[data-theme="strawberry"], .th-strawberry {
+  --st-1: #f46a85; --st-2: #7dc47b; --st-3: #ffbfd0; --st-4: #fff4e6; --st-ink: #4a1f2c; --st-blush: #ff8fa6;
+  --bulb-1: #ff8fa8; --bulb-2: #ffd1dc; --bulb-3: #ffe4b8; --chip-a: #ffd6e0; --chip-b: #e07a94;
+}
+:root[data-theme="matcha"], .th-matcha {
+  --st-1: #93bf70; --st-2: #f5b7c3; --st-3: #c99d78; --st-4: #fff8ea; --st-ink: #3a3326; --st-blush: #f6a5a5;
+  --bulb-1: #b8e08f; --bulb-2: #ffc6d0; --bulb-3: #fff0c2; --chip-a: #e0eacb; --chip-b: #7f9e63;
+}
+:root[data-theme="blueberry"], .th-blueberry {
+  --st-1: #6c8de0; --st-2: #ffd466; --st-3: #a9cbf5; --st-4: #fffbea; --st-ink: #22304d; --st-blush: #ffa7b5;
+  --bulb-1: #8fb0ff; --bulb-2: #ffd466; --bulb-3: #bfe0ff; --chip-a: #cfe0f8; --chip-b: #f2be3a;
+}
+:root[data-theme="melody"], .th-melody {
+  --st-1: #ff7a6b; --st-2: #3cc7b9; --st-3: #ffd36e; --st-4: #fff6ec; --st-ink: #2b1e2e; --st-blush: #ff9fb0;
+  --bulb-1: #ff7a6b; --bulb-2: #3cc7b9; --bulb-3: #ffd36e; --chip-a: #ffd9cc; --chip-b: #2bb5a8;
 }

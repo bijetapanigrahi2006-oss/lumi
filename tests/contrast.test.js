@@ -35,8 +35,8 @@ const PAIRS = [
 ];
 
 describe('palettes', () => {
-  it('defines all 5 themes in light and dark', () => {
-    for (const theme of ['mono', 'lavender', 'strawberry', 'matcha', 'blueberry']) {
+  it('defines all 6 themes in light and dark', () => {
+    for (const theme of ['mono', 'lavender', 'strawberry', 'matcha', 'blueberry', 'melody']) {
       expect(palettes[`${theme}/light`], `${theme}/light`).toBeDefined();
       expect(palettes[`${theme}/dark`], `${theme}/dark`).toBeDefined();
     }

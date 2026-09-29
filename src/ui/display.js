@@ -1,7 +1,7 @@
 // Renders calculator state onto the display card.
 import { preview } from '../engine/calculator.js';
 import { ERRORS, MINUS, OP_TEXT, tokenText, toParts, formatResult } from '../engine/format.js';
-import { settle, sheen, sparkle, shake, twinkle } from './effects.js';
+import { calm, settle, sheen, sparkle, shake, twinkle } from './effects.js';
 
 const FIT_STEPS = [1, 0.84, 0.7, 0.58, 0.48];
 
@@ -32,6 +32,11 @@ function expressionHTML(tokens, pop = null) {
     parts[i] = `${parts[i].slice(0, -1)}<span class="pop">${parts[i].slice(-1)}</span>`;
   }
   return parts.join('');
+}
+
+// Each character of a result bounces in, one after another.
+function waveHTML(text) {
+  return [...text].map((ch, i) => `<span class="wv" style="--i:${i}">${ch}</span>`).join('');
 }
 
 function popMode(prev, next) {
@@ -73,7 +78,8 @@ export function createDisplay(els) {
       main.innerHTML = resultHTML(value);
       previewEl.textContent = '';
       if (state.entry) {
-        settle(main);
+        if (toParts(value).exp === null) main.innerHTML = waveHTML(formatResult(value));
+        else settle(main);
         sheen(sheenEl);
         sparkle(sparklesEl);
         twinkle(logoSpark);
@@ -83,7 +89,10 @@ export function createDisplay(els) {
       }
     } else {
       expr.textContent = '';
-      main.innerHTML = state.tokens.length ? expressionHTML(state.tokens, popMode(prev, state)) : '0';
+      main.innerHTML = `${state.tokens.length ? expressionHTML(state.tokens, popMode(prev, state)) : '0'}<span class="caret amb"></span>`;
+      if (key === 'ac' && !calm()) {
+        main.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'ease-out' });
+      }
       const p = preview(state);
       previewEl.textContent = p === null ? '' : formatResult(p);
     }

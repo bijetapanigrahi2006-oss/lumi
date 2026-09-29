@@ -32,12 +32,12 @@ function faviconSVG(body, screen, spark, bg) {
   );
 }
 
-export function initTheme({ dots, modeBtn, logoSpark }) {
+export function initTheme({ chips, modeBtn, logoSpark, toast, onChange, onPick }) {
   const meta = document.querySelector('meta[name="theme-color"]');
   const icon = document.querySelector('link[rel="icon"]');
 
   function sync() {
-    for (const dot of dots) dot.setAttribute('aria-checked', String(dot.dataset.themePick === root.dataset.theme));
+    for (const chip of chips) chip.setAttribute('aria-checked', String(chip.dataset.themePick === root.dataset.theme));
     modeBtn.setAttribute('aria-label', root.dataset.mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
   }
 
@@ -50,10 +50,12 @@ export function initTheme({ dots, modeBtn, logoSpark }) {
 
   function apply(theme, mode, origin) {
     if (theme === root.dataset.theme && mode === root.dataset.mode) return;
+    const themeChanged = theme !== root.dataset.theme;
     const change = () => {
       root.dataset.theme = theme;
       root.dataset.mode = mode;
       sync();
+      if (themeChanged) onChange?.(theme);
     };
     if (origin && document.startViewTransition && !calm()) {
       root.classList.add('vt'); // colors switch instantly under the circular reveal
@@ -70,16 +72,41 @@ export function initTheme({ dots, modeBtn, logoSpark }) {
     twinkle(logoSpark);
   }
 
-  for (const dot of dots) {
-    dot.addEventListener('click', () => {
-      write('lumi.theme', dot.dataset.themePick);
-      apply(dot.dataset.themePick, root.dataset.mode, dot);
+  function showToast(text) {
+    toast.textContent = text;
+    if (calm()) return;
+    toast.animate(
+      [
+        { opacity: 0, transform: 'translateY(-8px) scale(0.9)' },
+        { opacity: 1, transform: 'none', offset: 0.15 },
+        { opacity: 1, transform: 'none', offset: 0.8 },
+        { opacity: 0, transform: 'translateY(-4px)' },
+      ],
+      { duration: 1600, easing: 'ease-out' },
+    );
+  }
+
+  for (const chip of chips) {
+    chip.addEventListener('click', () => {
+      const name = chip.dataset.themePick;
+      onPick?.(chip, name);
+      if (!calm()) {
+        chip.querySelector('.chip-ic').animate(
+          [{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(200deg) scale(1.3)', offset: 0.5 }, { transform: 'rotate(360deg) scale(1)' }],
+          { duration: 620, easing: 'cubic-bezier(0.3, 1.2, 0.5, 1)' },
+        );
+      }
+      if (name === root.dataset.theme) return;
+      write('lumi.theme', name);
+      apply(name, root.dataset.mode, chip);
+      showToast(chip.getAttribute('aria-label'));
     });
   }
 
   modeBtn.addEventListener('click', () => {
     const mode = root.dataset.mode === 'dark' ? 'light' : 'dark';
     write('lumi.mode', mode);
+    onPick?.(modeBtn, root.dataset.theme);
     apply(root.dataset.theme, mode, modeBtn);
   });
 

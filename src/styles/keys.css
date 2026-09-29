@@ -34,7 +34,8 @@
   border: 0;
   border-radius: clamp(18px, 2.7dvh, 24px);
   font-size: clamp(1.4rem, 3.3dvh, 1.75rem);
-  font-weight: 400;
+  font-weight: 500;
+  font-variation-settings: 'BNCE' 35;
   color: var(--fg);
   background: linear-gradient(180deg, var(--top), var(--bottom));
   box-shadow:

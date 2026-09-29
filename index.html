@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Lumi</title>
-    <meta name="description" content="Lumi — a premium pastel calculator that works offline." />
+    <meta name="description" content="Lumi — a cute, premium calculator with themes, stickers and sounds. Works offline." />
     <meta name="theme-color" content="#f5f5f3" />
     <meta name="color-scheme" content="light dark" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -20,9 +20,10 @@
         try {
           var t = localStorage.getItem('lumi.theme');
           var m = localStorage.getItem('lumi.mode');
-          if (['mono', 'lavender', 'strawberry', 'matcha', 'blueberry'].indexOf(t) > -1) d.dataset.theme = t;
+          if (['mono', 'lavender', 'strawberry', 'matcha', 'blueberry', 'melody'].indexOf(t) > -1) d.dataset.theme = t;
           d.dataset.mode = m === 'light' || m === 'dark' ? m : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
           if (localStorage.getItem('lumi.sci') === '1') d.classList.add('sci-open');
+          if (localStorage.getItem('lumi.sound') === 'off') d.classList.add('muted');
         } catch (e) {}
       })();
     </script>
@@ -59,10 +60,16 @@
       </symbol>
     </svg>
 
+    <div class="scene amb" aria-hidden="true">
+      <i class="orb"></i><i class="orb"></i><i class="orb"></i>
+      <div id="falls"></div>
+      <div id="bgStickers"></div>
+    </div>
+
     <main class="app" id="app">
       <header class="bar">
         <div class="brand">
-          <svg class="logo" id="logo" viewBox="0 0 32 32" aria-hidden="true">
+          <svg class="logo amb" id="logo" viewBox="0 0 32 32" aria-hidden="true">
             <rect class="logo-body" x="4.5" y="5.5" width="19" height="24" rx="5.5" />
             <rect class="logo-screen" x="8" y="9" width="12" height="5.5" rx="1.8" />
             <circle class="logo-key" cx="10" cy="19" r="1.45" />
@@ -73,15 +80,15 @@
             <circle class="logo-key" cx="18" cy="24" r="1.45" />
             <path class="logo-spark" d="M25 1c.45 3.5 2.5 5.55 6 6-3.5.45-5.55 2.5-6 6-.45-3.5-2.5-5.55-6-6 3.5-.45 5.55-2.5 6-6z" />
           </svg>
-          <span class="wordmark">Lumi</span>
+          <span class="wordmark amb" aria-label="Lumi"><span>L</span><span>u</span><span>m</span><span>i</span></span>
         </div>
-        <div class="themes" role="radiogroup" aria-label="Theme">
-          <button class="dot" role="radio" data-theme-pick="mono" aria-label="Classic Mono"></button>
-          <button class="dot" role="radio" data-theme-pick="lavender" aria-label="Lavender Haze"></button>
-          <button class="dot" role="radio" data-theme-pick="strawberry" aria-label="Strawberry Milk"></button>
-          <button class="dot" role="radio" data-theme-pick="matcha" aria-label="Matcha Latte"></button>
-          <button class="dot" role="radio" data-theme-pick="blueberry" aria-label="Blueberry Butter"></button>
-        </div>
+        <button class="icon-btn sound" id="soundBtn" aria-label="Sound on" aria-pressed="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z" />
+            <path class="waves" d="M15.5 9.2a4 4 0 0 1 0 5.6M18.3 6.6a7.6 7.6 0 0 1 0 10.8" />
+            <path class="mute-x" d="M16 9.6l4.8 4.8M20.8 9.6L16 14.4" />
+          </svg>
+        </button>
         <button class="icon-btn" id="historyBtn" aria-label="History" aria-expanded="false" aria-controls="history">
           <svg><use href="#i-clock" /></svg>
         </button>
@@ -91,7 +98,27 @@
         </button>
       </header>
 
+      <nav class="themes" role="radiogroup" aria-label="Theme">
+        <button class="chip-th th-mono" role="radio" data-theme-pick="mono" aria-label="Classic Mono"><span class="chip-ic"></span></button>
+        <button class="chip-th th-lavender" role="radio" data-theme-pick="lavender" aria-label="Lavender Haze"><span class="chip-ic"></span></button>
+        <button class="chip-th th-strawberry" role="radio" data-theme-pick="strawberry" aria-label="Strawberry Milk"><span class="chip-ic"></span></button>
+        <button class="chip-th th-matcha" role="radio" data-theme-pick="matcha" aria-label="Matcha Latte"><span class="chip-ic"></span></button>
+        <button class="chip-th th-blueberry" role="radio" data-theme-pick="blueberry" aria-label="Blueberry Butter"><span class="chip-ic"></span></button>
+        <button class="chip-th th-melody" role="radio" data-theme-pick="melody" aria-label="Melody (musical keys)"><span class="chip-ic"></span></button>
+      </nav>
+      <div class="toast" id="toast" role="status"></div>
+
+      <div class="screen-wrap amb">
+      <div class="garland" id="garland" aria-hidden="true">
+        <svg class="wire" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0 3Q25 38 50 3Q75 38 100 3" /></svg>
+      </div>
+      <div class="edge" id="edge" aria-hidden="true"></div>
       <section class="screen" id="screen" aria-label="Display">
+        <div class="board" id="board" aria-hidden="true"></div>
+        <svg class="twinkle" aria-hidden="true"><use href="#i-spark" /></svg>
+        <svg class="twinkle" aria-hidden="true"><use href="#i-spark" /></svg>
+        <svg class="twinkle" aria-hidden="true"><use href="#i-spark" /></svg>
+        <svg class="twinkle" aria-hidden="true"><use href="#i-spark" /></svg>
         <span class="sheen" aria-hidden="true"></span>
         <span class="sparkles" aria-hidden="true">
           <svg><use href="#i-spark" /></svg>
@@ -107,6 +134,7 @@
         </div>
         <p class="sr-only" role="status" id="sr"></p>
       </section>
+      </div>
 
       <section class="sci-panel" id="sci" aria-label="Scientific functions">
         <button class="key sci" data-key="(">(</button>
@@ -157,12 +185,13 @@
         </div>
         <ul class="history-list" id="historyList"></ul>
         <div class="history-empty" id="historyEmpty">
-          <svg><use href="#i-spark" /></svg>
+          <span class="empty-st" id="emptySticker"></span>
           <span>No calculations yet</span>
         </div>
       </section>
     </main>
 
+    <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -29,7 +29,7 @@ const KEYBOARD = {
   r: 'sqrt',
 };
 
-export function initKeypad(root, onKey, isBlocked) {
+export function initKeypad(root, onKey, isBlocked, onTap) {
   for (const key of root.querySelectorAll('.key')) {
     const glow = document.createElement('span');
     glow.className = 'bloom';
@@ -40,7 +40,9 @@ export function initKeypad(root, onKey, isBlocked) {
     'pointerdown',
     (e) => {
       const key = e.target.closest('.key');
-      if (key) bloom(key, e);
+      if (!key) return;
+      bloom(key, e);
+      onTap?.(key, e);
     },
     { passive: true },
   );

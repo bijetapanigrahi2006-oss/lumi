@@ -3,6 +3,7 @@ import './styles/base.css';
 import './styles/display.css';
 import './styles/keys.css';
 import './styles/panels.css';
+import './styles/scenery.css';
 
 import { initialState, press, loadValue } from './engine/calculator.js';
 import { createDisplay } from './ui/display.js';
@@ -10,6 +11,8 @@ import { initKeypad } from './ui/keypad.js';
 import { initTheme } from './ui/theme.js';
 import { initHistory } from './ui/history.js';
 import { initScientific } from './ui/scientific.js';
+import { initScenery } from './ui/scenery.js';
+import { initSound } from './ui/sound.js';
 
 const $ = (id) => document.getElementById(id);
 const app = $('app');
@@ -24,6 +27,23 @@ function savedAngle() {
 }
 
 let state = initialState(savedAngle());
+const chips = document.querySelectorAll('.chip-th');
+
+const scenery = initScenery({
+  board: $('board'),
+  edge: $('edge'),
+  bgStickers: $('bgStickers'),
+  falls: $('falls'),
+  garland: $('garland'),
+  fxLayer: $('fxLayer'),
+  emptySticker: $('emptySticker'),
+  chips,
+});
+const sound = initSound({ button: $('soundBtn') });
+const centerOf = (el) => {
+  const r = el.getBoundingClientRect();
+  return [r.left + r.width / 2, r.top + r.height / 2];
+};
 
 const display = createDisplay({
   screen: $('screen'),
@@ -54,7 +74,18 @@ const history = initHistory(
   },
 );
 
-initTheme({ dots: document.querySelectorAll('.dot'), modeBtn: $('modeBtn'), logoSpark });
+initTheme({
+  chips,
+  modeBtn: $('modeBtn'),
+  logoSpark,
+  toast: $('toast'),
+  onChange: () => scenery.render(true),
+  onPick: (el, name) => {
+    scenery.jelly(el);
+    scenery.burst(...centerOf(el), 8, 1.3);
+    sound.theme(name);
+  },
+});
 initScientific({ btn: $('sciBtn'), panel: $('sci') }, display.fit);
 
 initKeypad(
@@ -71,8 +102,23 @@ initKeypad(
       }
     }
     display.render(state, prev, key);
+    if (state.entry) {
+      scenery.celebrate();
+      scenery.confetti($('screen'));
+      sound.result();
+    } else if (state.error && !prev.error) {
+      scenery.dizzy();
+      sound.error();
+    } else if (key === 'ac') {
+      sound.clear();
+    } else {
+      sound.key(key);
+    }
   },
   history.isOpen,
+  (keyEl, e) => {
+    if (!keyEl.classList.contains('eq')) scenery.burst(e.clientX, e.clientY, keyEl.matches('.op, .fn') ? 4 : 3);
+  },
 );
 
 display.render(state, null, null);

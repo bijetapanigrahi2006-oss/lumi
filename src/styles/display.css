@@ -52,17 +52,18 @@
 .main {
   --fit: 1;
   font-size: calc(var(--fs-base) * var(--fit));
-  font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-variation-settings: 'BNCE' 45;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--text);
-  font-feature-settings: 'tnum' 1;
+  text-shadow: 0 0 22px var(--text-glow);
   transform-origin: 100% 50%;
 }
 
 .main.is-error {
   font-size: calc(var(--fs-base) * 0.5);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0;
   color: var(--muted);
 }
