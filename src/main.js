@@ -13,6 +13,7 @@ import { initHistory } from './ui/history.js';
 import { initScientific } from './ui/scientific.js';
 import { initScenery } from './ui/scenery.js';
 import { initSound } from './ui/sound.js';
+import { registerSW } from 'virtual:pwa-register';
 
 const $ = (id) => document.getElementById(id);
 const app = $('app');
@@ -126,3 +127,14 @@ initKeypad(
 );
 
 display.render(state, null, null);
+
+// Offline support. When a new version is published the app reloads onto it by itself,
+// and it checks for one whenever it comes back to the foreground (no polling).
+registerSW({
+  immediate: true,
+  onRegisteredSW(_url, registration) {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') registration?.update();
+    });
+  },
+});

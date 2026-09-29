@@ -598,3 +598,42 @@ body {
     font-size: 1.5rem;
   }
 }
+
+@media (orientation: landscape) and (max-height: 400px) {
+  .app {
+    row-gap: 6px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .bar {
+    min-height: 30px;
+  }
+
+  .logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .wordmark {
+    font-size: 1.3rem;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .themes {
+    min-height: 30px;
+  }
+
+  .chip-th {
+    width: 26px;
+    height: 26px;
+  }
+
+  .chip-th .chip-ic {
+    width: 17px;
+    height: 17px;
+  }
+}
