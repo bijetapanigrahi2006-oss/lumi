@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" data-theme="mono" data-mode="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Lumi</title>
+    <meta name="description" content="Lumi — a premium pastel calculator that works offline." />
+    <meta name="theme-color" content="#f5f5f3" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Lumi" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <script>
+      // Apply the saved theme before first paint so the wrong colors never flash.
+      (function () {
+        var d = document.documentElement;
+        try {
+          var t = localStorage.getItem('lumi.theme');
+          var m = localStorage.getItem('lumi.mode');
+          if (['mono', 'lavender', 'strawberry', 'matcha', 'blueberry'].indexOf(t) > -1) d.dataset.theme = t;
+          d.dataset.mode = m === 'light' || m === 'dark' ? m : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          if (localStorage.getItem('lumi.sci') === '1') d.classList.add('sci-open');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-times" viewBox="0 0 24 24"><path d="M6.8 6.8l10.4 10.4M17.2 6.8L6.8 17.2" /></symbol>
+      <symbol id="i-divide" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <circle cx="12" cy="6.3" r="1.1" fill="currentColor" />
+        <circle cx="12" cy="17.7" r="1.1" fill="currentColor" />
+      </symbol>
+      <symbol id="i-equals" viewBox="0 0 24 24"><path d="M5.5 9h13M5.5 15h13" /></symbol>
+      <symbol id="i-pm" viewBox="0 0 24 24"><path d="M7.5 4.5v7M4 8h7M17.5 5L6.5 19M14 16h6.5" /></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24">
+        <path d="M9.2 5.5H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9.2L3.5 12z" />
+        <path d="M12.5 9.6l4.8 4.8M17.3 9.6l-4.8 4.8" />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <path d="M3.6 12a8.4 8.4 0 1 0 2.5-6" />
+        <path d="M3.5 3.8v4.4h4.4" />
+        <path d="M12 7.6V12l3 1.9" />
+      </symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2z" /></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" /></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24">
+        <path d="M12 1.5c.7 5.6 4.9 9.8 10.5 10.5-5.6.7-9.8 4.9-10.5 10.5C11.3 16.9 7.1 12.7 1.5 12 7.1 11.3 11.3 7.1 12 1.5z" />
+      </symbol>
+    </svg>
+
+    <main class="app" id="app">
+      <header class="bar">
+        <div class="brand">
+          <svg class="logo" id="logo" viewBox="0 0 32 32" aria-hidden="true">
+            <rect class="logo-body" x="4.5" y="5.5" width="19" height="24" rx="5.5" />
+            <rect class="logo-screen" x="8" y="9" width="12" height="5.5" rx="1.8" />
+            <circle class="logo-key" cx="10" cy="19" r="1.45" />
+            <circle class="logo-key" cx="14" cy="19" r="1.45" />
+            <circle class="logo-key" cx="18" cy="19" r="1.45" />
+            <circle class="logo-key" cx="10" cy="24" r="1.45" />
+            <circle class="logo-key" cx="14" cy="24" r="1.45" />
+            <circle class="logo-key" cx="18" cy="24" r="1.45" />
+            <path class="logo-spark" d="M25 1c.45 3.5 2.5 5.55 6 6-3.5.45-5.55 2.5-6 6-.45-3.5-2.5-5.55-6-6 3.5-.45 5.55-2.5 6-6z" />
+          </svg>
+          <span class="wordmark">Lumi</span>
+        </div>
+        <div class="themes" role="radiogroup" aria-label="Theme">
+          <button class="dot" role="radio" data-theme-pick="mono" aria-label="Classic Mono"></button>
+          <button class="dot" role="radio" data-theme-pick="lavender" aria-label="Lavender Haze"></button>
+          <button class="dot" role="radio" data-theme-pick="strawberry" aria-label="Strawberry Milk"></button>
+          <button class="dot" role="radio" data-theme-pick="matcha" aria-label="Matcha Latte"></button>
+          <button class="dot" role="radio" data-theme-pick="blueberry" aria-label="Blueberry Butter"></button>
+        </div>
+        <button class="icon-btn" id="historyBtn" aria-label="History" aria-expanded="false" aria-controls="history">
+          <svg><use href="#i-clock" /></svg>
+        </button>
+        <button class="icon-btn mode" id="modeBtn" aria-label="Switch to dark mode">
+          <svg class="sun"><use href="#i-sun" /></svg>
+          <svg class="moon"><use href="#i-moon" /></svg>
+        </button>
+      </header>
+
+      <section class="screen" id="screen" aria-label="Display">
+        <span class="sheen" aria-hidden="true"></span>
+        <span class="sparkles" aria-hidden="true">
+          <svg><use href="#i-spark" /></svg>
+          <svg><use href="#i-spark" /></svg>
+          <svg><use href="#i-spark" /></svg>
+        </span>
+        <div class="line expr" id="expr"></div>
+        <div class="line main" id="main">0</div>
+        <div class="line preview" id="preview"></div>
+        <div class="screen-foot">
+          <button class="chip" id="sciBtn" aria-expanded="false" aria-controls="sci" aria-label="Scientific functions">fx</button>
+          <span class="angle-tag" id="angleTag">DEG</span>
+        </div>
+        <p class="sr-only" role="status" id="sr"></p>
+      </section>
+
+      <section class="sci-panel" id="sci" aria-label="Scientific functions">
+        <button class="key sci" data-key="(">(</button>
+        <button class="key sci" data-key=")">)</button>
+        <button class="key sci" data-key="sq" aria-label="Square"><span><i>x</i><sup>2</sup></span></button>
+        <button class="key sci" data-key="^" aria-label="Power"><span><i>x</i><sup><i>y</i></sup></span></button>
+        <button class="key sci" data-key="sqrt" aria-label="Square root">√</button>
+        <button class="key sci" data-key="sin">sin</button>
+        <button class="key sci" data-key="cos">cos</button>
+        <button class="key sci" data-key="tan">tan</button>
+        <button class="key sci" data-key="ln">ln</button>
+        <button class="key sci" data-key="log">log</button>
+        <button class="key sci" data-key="pi" aria-label="Pi">π</button>
+        <button class="key sci" data-key="e" aria-label="Euler's number"><i>e</i></button>
+        <button class="key sci" data-key="fact" aria-label="Factorial"><span><i>x</i>!</span></button>
+        <button class="key sci" data-key="inv" aria-label="Reciprocal"><span>1/<i>x</i></span></button>
+        <button class="key sci on" data-key="angle" id="angleKey" aria-label="Angle mode: degrees">DEG</button>
+      </section>
+
+      <section class="keypad" id="keypad" aria-label="Keypad">
+        <button class="key fn" data-key="ac" aria-label="All clear">AC</button>
+        <button class="key fn" data-key="back" aria-label="Backspace"><svg class="ico"><use href="#i-back" /></svg></button>
+        <button class="key fn" data-key="pct" aria-label="Percent">%</button>
+        <button class="key op" data-key="/" aria-label="Divide"><svg class="ico"><use href="#i-divide" /></svg></button>
+        <button class="key" data-key="7">7</button>
+        <button class="key" data-key="8">8</button>
+        <button class="key" data-key="9">9</button>
+        <button class="key op" data-key="*" aria-label="Multiply"><svg class="ico"><use href="#i-times" /></svg></button>
+        <button class="key" data-key="4">4</button>
+        <button class="key" data-key="5">5</button>
+        <button class="key" data-key="6">6</button>
+        <button class="key op" data-key="-" aria-label="Minus"><svg class="ico"><use href="#i-minus" /></svg></button>
+        <button class="key" data-key="1">1</button>
+        <button class="key" data-key="2">2</button>
+        <button class="key" data-key="3">3</button>
+        <button class="key op" data-key="+" aria-label="Plus"><svg class="ico"><use href="#i-plus" /></svg></button>
+        <button class="key" data-key="sign" aria-label="Plus or minus"><svg class="ico"><use href="#i-pm" /></svg></button>
+        <button class="key" data-key="0">0</button>
+        <button class="key" data-key="." aria-label="Decimal point">.</button>
+        <button class="key eq" data-key="=" aria-label="Equals"><svg class="ico"><use href="#i-equals" /></svg></button>
+      </section>
+
+      <section class="history" id="history" aria-label="History" inert>
+        <div class="history-head">
+          <h2>History</h2>
+          <button class="text-btn" id="clearHistory">Clear</button>
+          <button class="icon-btn" id="closeHistory" aria-label="Close history"><svg><use href="#i-up" /></svg></button>
+        </div>
+        <ul class="history-list" id="historyList"></ul>
+        <div class="history-empty" id="historyEmpty">
+          <svg><use href="#i-spark" /></svg>
+          <span>No calculations yet</span>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

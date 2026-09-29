@@ -1,0 +1,413 @@
+/* Lumi color tokens — 5 themes × light/dark.
+   Every color used in the UI comes from here. Tokens are registered with @property
+   so a theme change can cross-fade smoothly (one-off, then idle). */
+
+@property --bg { syntax: '<color>'; inherits: true; initial-value: #f5f5f3; }
+@property --glow-1 { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --glow-2 { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --text { syntax: '<color>'; inherits: true; initial-value: #111; }
+@property --muted { syntax: '<color>'; inherits: true; initial-value: #666; }
+@property --screen-top { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --screen-bottom { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --screen-edge { syntax: '<color>'; inherits: true; initial-value: #eee; }
+@property --screen-rim { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --screen-shadow { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --key-top { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --key-bottom { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --key-text { syntax: '<color>'; inherits: true; initial-value: #111; }
+@property --fn-top { syntax: '<color>'; inherits: true; initial-value: #eee; }
+@property --fn-bottom { syntax: '<color>'; inherits: true; initial-value: #eee; }
+@property --fn-text { syntax: '<color>'; inherits: true; initial-value: #111; }
+@property --op-top { syntax: '<color>'; inherits: true; initial-value: #ddd; }
+@property --op-bottom { syntax: '<color>'; inherits: true; initial-value: #ddd; }
+@property --op-text { syntax: '<color>'; inherits: true; initial-value: #111; }
+@property --eq-top { syntax: '<color>'; inherits: true; initial-value: #222; }
+@property --eq-bottom { syntax: '<color>'; inherits: true; initial-value: #000; }
+@property --eq-text { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --eq-glow { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --sci-top { syntax: '<color>'; inherits: true; initial-value: #fafafa; }
+@property --sci-bottom { syntax: '<color>'; inherits: true; initial-value: #f5f5f5; }
+@property --sci-text { syntax: '<color>'; inherits: true; initial-value: #333; }
+@property --rim { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --shadow { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --accent { syntax: '<color>'; inherits: true; initial-value: #111; }
+@property --accent-2 { syntax: '<color>'; inherits: true; initial-value: #999; }
+@property --panel { syntax: '<color>'; inherits: true; initial-value: #fff; }
+@property --divider { syntax: '<color>'; inherits: true; initial-value: #eee; }
+
+:root {
+  /* Theme swatches for the picker dots (same in every theme). */
+  --sw-mono-a: #ffffff;
+  --sw-mono-b: #1a1a1a;
+  --sw-lavender-a: #dccfff;
+  --sw-lavender-b: #8e7be0;
+  --sw-strawberry-a: #ffd6e0;
+  --sw-strawberry-b: #e07a94;
+  --sw-matcha-a: #e0eacb;
+  --sw-matcha-b: #7f9e63;
+  --sw-blueberry-a: #cfe0f8;
+  --sw-blueberry-b: #f2be3a;
+
+  transition-property: --bg, --glow-1, --glow-2, --text, --muted, --screen-top, --screen-bottom,
+    --screen-edge, --screen-rim, --screen-shadow, --key-top, --key-bottom, --key-text, --fn-top,
+    --fn-bottom, --fn-text, --op-top, --op-bottom, --op-text, --eq-top, --eq-bottom, --eq-text,
+    --eq-glow, --sci-top, --sci-bottom, --sci-text, --rim, --shadow, --accent, --accent-2, --panel,
+    --divider;
+  transition-duration: 0.4s;
+  transition-timing-function: ease;
+}
+
+/* ─── Classic Mono (default) ─────────────────────────────── */
+:root[data-theme="mono"][data-mode="light"] {
+  --bg: #f5f5f3;
+  --glow-1: #ffffff;
+  --glow-2: #e8e8e5;
+  --text: #111111;
+  --muted: #666666;
+  --screen-top: #ffffff;
+  --screen-bottom: #f8f8f7;
+  --screen-edge: #e4e4e1;
+  --screen-rim: rgba(255, 255, 255, 0.95);
+  --screen-shadow: rgba(0, 0, 0, 0.12);
+  --key-top: #ffffff;
+  --key-bottom: #f3f3f1;
+  --key-text: #141414;
+  --fn-top: #ececea;
+  --fn-bottom: #e3e3e0;
+  --fn-text: #141414;
+  --op-top: #dcdcd8;
+  --op-bottom: #cfcfcb;
+  --op-text: #111111;
+  --eq-top: #2c2c2c;
+  --eq-bottom: #070707;
+  --eq-text: #ffffff;
+  --eq-glow: rgba(0, 0, 0, 0.3);
+  --sci-top: #fafaf9;
+  --sci-bottom: #f1f1ef;
+  --sci-text: #333333;
+  --rim: rgba(255, 255, 255, 0.9);
+  --shadow: rgba(0, 0, 0, 0.16);
+  --accent: #111111;
+  --accent-2: #9a9a9a;
+  --panel: #fafaf9;
+  --divider: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="mono"][data-mode="dark"] {
+  --bg: #000000;
+  --glow-1: #141414;
+  --glow-2: #0a0a0a;
+  --text: #f5f5f5;
+  --muted: #9a9a9a;
+  --screen-top: #151515;
+  --screen-bottom: #0c0c0c;
+  --screen-edge: #242424;
+  --screen-rim: rgba(255, 255, 255, 0.07);
+  --screen-shadow: rgba(0, 0, 0, 0.6);
+  --key-top: #1e1e1e;
+  --key-bottom: #161616;
+  --key-text: #f2f2f2;
+  --fn-top: #2d2d2d;
+  --fn-bottom: #252525;
+  --fn-text: #f2f2f2;
+  --op-top: #3b3b3b;
+  --op-bottom: #323232;
+  --op-text: #f7f7f7;
+  --eq-top: #ffffff;
+  --eq-bottom: #e2e2e2;
+  --eq-text: #000000;
+  --eq-glow: rgba(255, 255, 255, 0.2);
+  --sci-top: #121212;
+  --sci-bottom: #0f0f0f;
+  --sci-text: #cfcfcf;
+  --rim: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.7);
+  --accent: #ffffff;
+  --accent-2: #8a8a8a;
+  --panel: #0c0c0c;
+  --divider: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Lavender Haze ──────────────────────────────────────── */
+:root[data-theme="lavender"][data-mode="light"] {
+  --bg: #f3effa;
+  --glow-1: #e6ddfb;
+  --glow-2: #dce5fb;
+  --text: #2a2440;
+  --muted: #6b628c;
+  --screen-top: #ffffff;
+  --screen-bottom: #f6f2fd;
+  --screen-edge: #e4dcf5;
+  --screen-rim: rgba(255, 255, 255, 0.95);
+  --screen-shadow: rgba(92, 70, 160, 0.16);
+  --key-top: #ffffff;
+  --key-bottom: #f5f1fc;
+  --key-text: #372f52;
+  --fn-top: #eee8fb;
+  --fn-bottom: #e4dbf8;
+  --fn-text: #5642a8;
+  --op-top: #e4dafb;
+  --op-bottom: #d6c8f6;
+  --op-text: #48359b;
+  --eq-top: #7661d7;
+  --eq-bottom: #5a46bf;
+  --eq-text: #ffffff;
+  --eq-glow: rgba(101, 81, 201, 0.42);
+  --sci-top: #f9f7fe;
+  --sci-bottom: #f2edfc;
+  --sci-text: #554c78;
+  --rim: rgba(255, 255, 255, 0.9);
+  --shadow: rgba(80, 60, 150, 0.18);
+  --accent: #7560d6;
+  --accent-2: #eea0c8;
+  --panel: #faf8fe;
+  --divider: rgba(80, 60, 150, 0.1);
+}
+
+:root[data-theme="lavender"][data-mode="dark"] {
+  --bg: #13111c;
+  --glow-1: #2a2248;
+  --glow-2: #1a2140;
+  --text: #f3f0ff;
+  --muted: #a69dc4;
+  --screen-top: #221d33;
+  --screen-bottom: #1a1628;
+  --screen-edge: #2f2846;
+  --screen-rim: rgba(255, 255, 255, 0.07);
+  --screen-shadow: rgba(0, 0, 0, 0.5);
+  --key-top: #2a2440;
+  --key-bottom: #221d35;
+  --key-text: #ece7ff;
+  --fn-top: #352c55;
+  --fn-bottom: #2d2549;
+  --fn-text: #cdbeff;
+  --op-top: #463a78;
+  --op-bottom: #3b3068;
+  --op-text: #e7deff;
+  --eq-top: #b8aafb;
+  --eq-bottom: #9784ef;
+  --eq-text: #17112f;
+  --eq-glow: rgba(160, 140, 245, 0.38);
+  --sci-top: #1f1a2f;
+  --sci-bottom: #1b1729;
+  --sci-text: #c0b5e8;
+  --rim: rgba(255, 255, 255, 0.07);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --accent: #b7a8ff;
+  --accent-2: #ffc7e6;
+  --panel: #1a1627;
+  --divider: rgba(255, 255, 255, 0.07);
+}
+
+/* ─── Strawberry Milk ────────────────────────────────────── */
+:root[data-theme="strawberry"][data-mode="light"] {
+  --bg: #fff1f3;
+  --glow-1: #ffdce4;
+  --glow-2: #ffe8da;
+  --text: #45202c;
+  --muted: #8f5466;
+  --screen-top: #ffffff;
+  --screen-bottom: #fff4f6;
+  --screen-edge: #f7dce3;
+  --screen-rim: rgba(255, 255, 255, 0.95);
+  --screen-shadow: rgba(200, 90, 120, 0.16);
+  --key-top: #ffffff;
+  --key-bottom: #fff5f7;
+  --key-text: #4e2835;
+  --fn-top: #fde7ec;
+  --fn-bottom: #fadae2;
+  --fn-text: #a1335a;
+  --op-top: #fad4de;
+  --op-bottom: #f6c4d1;
+  --op-text: #8c2446;
+  --eq-top: #c04a70;
+  --eq-bottom: #a63a60;
+  --eq-text: #ffffff;
+  --eq-glow: rgba(214, 96, 130, 0.4);
+  --sci-top: #fff9fa;
+  --sci-bottom: #fdf0f3;
+  --sci-text: #7c4454;
+  --rim: rgba(255, 255, 255, 0.9);
+  --shadow: rgba(190, 80, 110, 0.18);
+  --accent: #d4617f;
+  --accent-2: #ffb48f;
+  --panel: #fff8f9;
+  --divider: rgba(190, 80, 110, 0.1);
+}
+
+:root[data-theme="strawberry"][data-mode="dark"] {
+  --bg: #1a1115;
+  --glow-1: #36192b;
+  --glow-2: #2b1b18;
+  --text: #ffeff3;
+  --muted: #c99cab;
+  --screen-top: #2a1b22;
+  --screen-bottom: #21151b;
+  --screen-edge: #3a2530;
+  --screen-rim: rgba(255, 255, 255, 0.07);
+  --screen-shadow: rgba(0, 0, 0, 0.5);
+  --key-top: #2e1f26;
+  --key-bottom: #261920;
+  --key-text: #fbe6ec;
+  --fn-top: #3d2530;
+  --fn-bottom: #352029;
+  --fn-text: #ffb8ca;
+  --op-top: #552a3d;
+  --op-bottom: #4a2434;
+  --op-text: #ffd3de;
+  --eq-top: #f8abbf;
+  --eq-bottom: #ee8ca6;
+  --eq-text: #3a0e1c;
+  --eq-glow: rgba(240, 140, 166, 0.36);
+  --sci-top: #25191f;
+  --sci-bottom: #20161b;
+  --sci-text: #ddb3c0;
+  --rim: rgba(255, 255, 255, 0.07);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --accent: #f5a3b9;
+  --accent-2: #ffd1b3;
+  --panel: #22161c;
+  --divider: rgba(255, 255, 255, 0.07);
+}
+
+/* ─── Matcha Latte ───────────────────────────────────────── */
+:root[data-theme="matcha"][data-mode="light"] {
+  --bg: #f4f0e6;
+  --glow-1: #e4ebd3;
+  --glow-2: #f3e5d3;
+  --text: #2e2a22;
+  --muted: #6e6553;
+  --screen-top: #fffefa;
+  --screen-bottom: #f8f4ea;
+  --screen-edge: #e5dfd0;
+  --screen-rim: rgba(255, 255, 255, 0.95);
+  --screen-shadow: rgba(110, 95, 60, 0.16);
+  --key-top: #fffefa;
+  --key-bottom: #f9f6ee;
+  --key-text: #3a3428;
+  --fn-top: #efe8da;
+  --fn-bottom: #e6ddcc;
+  --fn-text: #6a4b36;
+  --op-top: #dde7cb;
+  --op-bottom: #cedcb8;
+  --op-text: #36501f;
+  --eq-top: #5c7f40;
+  --eq-bottom: #4a6c32;
+  --eq-text: #ffffff;
+  --eq-glow: rgba(85, 122, 59, 0.38);
+  --sci-top: #fcfaf4;
+  --sci-bottom: #f4f0e5;
+  --sci-text: #5c5343;
+  --rim: rgba(255, 255, 255, 0.9);
+  --shadow: rgba(100, 85, 50, 0.18);
+  --accent: #658847;
+  --accent-2: #b8906f;
+  --panel: #fbf9f3;
+  --divider: rgba(100, 85, 50, 0.1);
+}
+
+:root[data-theme="matcha"][data-mode="dark"] {
+  --bg: #101510;
+  --glow-1: #1c2a1a;
+  --glow-2: #2a2219;
+  --text: #eef3e6;
+  --muted: #a3ae96;
+  --screen-top: #1c231b;
+  --screen-bottom: #161c15;
+  --screen-edge: #283327;
+  --screen-rim: rgba(255, 255, 255, 0.07);
+  --screen-shadow: rgba(0, 0, 0, 0.5);
+  --key-top: #212a20;
+  --key-bottom: #1b231a;
+  --key-text: #e6eddc;
+  --fn-top: #2f2a22;
+  --fn-bottom: #28241d;
+  --fn-text: #e6ccb1;
+  --op-top: #30442a;
+  --op-bottom: #283923;
+  --op-text: #d2eabb;
+  --eq-top: #b6d89c;
+  --eq-bottom: #98be7c;
+  --eq-text: #14200d;
+  --eq-glow: rgba(152, 190, 124, 0.32);
+  --sci-top: #1a2019;
+  --sci-bottom: #171d16;
+  --sci-text: #bac7ab;
+  --rim: rgba(255, 255, 255, 0.07);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --accent: #a8cc8c;
+  --accent-2: #e3c9ae;
+  --panel: #171d16;
+  --divider: rgba(255, 255, 255, 0.07);
+}
+
+/* ─── Blueberry Butter ───────────────────────────────────── */
+:root[data-theme="blueberry"][data-mode="light"] {
+  --bg: #eef4fc;
+  --glow-1: #dae8fb;
+  --glow-2: #fff2cc;
+  --text: #1e2b42;
+  --muted: #5b6b85;
+  --screen-top: #ffffff;
+  --screen-bottom: #f3f7fd;
+  --screen-edge: #dae4f3;
+  --screen-rim: rgba(255, 255, 255, 0.95);
+  --screen-shadow: rgba(60, 100, 170, 0.16);
+  --key-top: #ffffff;
+  --key-bottom: #f4f8fd;
+  --key-text: #24324c;
+  --fn-top: #e3edf9;
+  --fn-bottom: #d6e4f6;
+  --fn-text: #2c4f85;
+  --op-top: #ffeec2;
+  --op-bottom: #ffe3a0;
+  --op-text: #5e4200;
+  --eq-top: #ffd670;
+  --eq-bottom: #f5be3a;
+  --eq-text: #3f2c00;
+  --eq-glow: rgba(240, 180, 50, 0.42);
+  --sci-top: #f8fafe;
+  --sci-bottom: #eef3fb;
+  --sci-text: #475977;
+  --rim: rgba(255, 255, 255, 0.9);
+  --shadow: rgba(60, 100, 170, 0.18);
+  --accent: #4f7fc4;
+  --accent-2: #f2be3a;
+  --panel: #f7fafe;
+  --divider: rgba(60, 100, 170, 0.1);
+}
+
+:root[data-theme="blueberry"][data-mode="dark"] {
+  --bg: #0d1422;
+  --glow-1: #172642;
+  --glow-2: #2a2515;
+  --text: #eaf1ff;
+  --muted: #9daeca;
+  --screen-top: #17213a;
+  --screen-bottom: #121a2e;
+  --screen-edge: #23314f;
+  --screen-rim: rgba(255, 255, 255, 0.07);
+  --screen-shadow: rgba(0, 0, 0, 0.5);
+  --key-top: #1b2640;
+  --key-bottom: #172035;
+  --key-text: #e3ecff;
+  --fn-top: #22335a;
+  --fn-bottom: #1d2c4f;
+  --fn-text: #b8cef6;
+  --op-top: #3b3522;
+  --op-bottom: #332e1d;
+  --op-text: #ffd873;
+  --eq-top: #ffda7d;
+  --eq-bottom: #f7c24e;
+  --eq-text: #2a1f00;
+  --eq-glow: rgba(255, 200, 80, 0.3);
+  --sci-top: #151e33;
+  --sci-bottom: #131b2e;
+  --sci-text: #aabbd9;
+  --rim: rgba(255, 255, 255, 0.07);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --accent: #8fb3f0;
+  --accent-2: #ffd166;
+  --panel: #121a2d;
+  --divider: rgba(255, 255, 255, 0.07);
+}

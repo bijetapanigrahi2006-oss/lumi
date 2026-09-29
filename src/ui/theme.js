@@ -1,0 +1,93 @@
+// Theme + light/dark switching. Also recolors the browser-tab icon and status bar.
+import { calm, reveal, twinkle } from './effects.js';
+
+const root = document.documentElement;
+const systemDark = matchMedia('(prefers-color-scheme: dark)');
+
+function read(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function write(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* private mode: the choice just won't be remembered */
+  }
+}
+
+function faviconSVG(body, screen, spark, bg) {
+  const keys = [10, 14, 18].flatMap((x) => [19, 24].map((y) => `<circle cx="${x}" cy="${y}" r="1.45"/>`)).join('');
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">` +
+    `<rect x="4.5" y="5.5" width="19" height="24" rx="5.5" fill="${body}"/>` +
+    `<rect x="8" y="9" width="12" height="5.5" rx="1.8" fill="${screen}"/>` +
+    `<g fill="${screen}" opacity=".85">${keys}</g>` +
+    `<path d="M25 1c.45 3.5 2.5 5.55 6 6-3.5.45-5.55 2.5-6 6-.45-3.5-2.5-5.55-6-6 3.5-.45 5.55-2.5 6-6z" ` +
+    `fill="${spark}" stroke="${bg}" stroke-width="1.6" paint-order="stroke"/></svg>`
+  );
+}
+
+export function initTheme({ dots, modeBtn, logoSpark }) {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const icon = document.querySelector('link[rel="icon"]');
+
+  function sync() {
+    for (const dot of dots) dot.setAttribute('aria-checked', String(dot.dataset.themePick === root.dataset.theme));
+    modeBtn.setAttribute('aria-label', root.dataset.mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
+  function updateMeta() {
+    const cs = getComputedStyle(root);
+    const c = (name) => cs.getPropertyValue(name).trim();
+    meta.content = c('--bg');
+    icon.href = `data:image/svg+xml,${encodeURIComponent(faviconSVG(c('--accent'), c('--screen-top'), c('--accent-2'), c('--bg')))}`;
+  }
+
+  function apply(theme, mode, origin) {
+    if (theme === root.dataset.theme && mode === root.dataset.mode) return;
+    const change = () => {
+      root.dataset.theme = theme;
+      root.dataset.mode = mode;
+      sync();
+    };
+    if (origin && document.startViewTransition && !calm()) {
+      root.classList.add('vt'); // colors switch instantly under the circular reveal
+      const vt = document.startViewTransition(change);
+      vt.ready.then(() => reveal(origin)).catch(() => {});
+      vt.finished.finally(() => {
+        root.classList.remove('vt');
+        updateMeta();
+      });
+    } else {
+      change();
+      setTimeout(updateMeta, 450); // after the color cross-fade settles
+    }
+    twinkle(logoSpark);
+  }
+
+  for (const dot of dots) {
+    dot.addEventListener('click', () => {
+      write('lumi.theme', dot.dataset.themePick);
+      apply(dot.dataset.themePick, root.dataset.mode, dot);
+    });
+  }
+
+  modeBtn.addEventListener('click', () => {
+    const mode = root.dataset.mode === 'dark' ? 'light' : 'dark';
+    write('lumi.mode', mode);
+    apply(root.dataset.theme, mode, modeBtn);
+  });
+
+  // Follow the phone's light/dark setting until the user picks one.
+  systemDark.addEventListener('change', () => {
+    if (!read('lumi.mode')) apply(root.dataset.theme, systemDark.matches ? 'dark' : 'light');
+  });
+
+  sync();
+  updateMeta();
+}
