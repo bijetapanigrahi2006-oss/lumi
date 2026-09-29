@@ -82,8 +82,8 @@ button {
 }
 
 .logo {
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   overflow: visible;
 }
 
@@ -117,15 +117,12 @@ button {
   opacity: 0.9;
 }
 
-.logo-eye {
+.logo-bar {
   fill: var(--accent);
 }
 
-.logo-smile {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 0.9;
-  stroke-linecap: round;
+.logo-bar.short {
+  opacity: 0.55;
 }
 
 .logo-spark {
@@ -151,7 +148,7 @@ button {
 
 .wordmark {
   display: flex;
-  font-size: 1.5rem;
+  font-size: 1.95rem;
   font-weight: 800;
   font-variation-settings: 'BNCE' 90;
   letter-spacing: 0.01em;

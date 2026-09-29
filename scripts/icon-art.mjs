@@ -62,13 +62,8 @@ export function iconSVG({ rounded }) {
   <rect x="180" y="146" width="152" height="92" rx="26" fill="#6b54c7" opacity=".35"/>
   <rect x="180" y="142" width="152" height="92" rx="26" fill="url(#screen)"/>
   <rect x="180" y="142" width="152" height="92" rx="26" fill="url(#screenGloss)"/>
-  <ellipse cx="220" cy="198" rx="10" ry="6" fill="#ffc3d6" opacity=".9"/>
-  <ellipse cx="292" cy="198" rx="10" ry="6" fill="#ffc3d6" opacity=".9"/>
-  <ellipse cx="232" cy="184" rx="7" ry="9" fill="#fff"/>
-  <ellipse cx="280" cy="184" rx="7" ry="9" fill="#fff"/>
-  <circle cx="234" cy="181" r="2.4" fill="#8a74e8"/>
-  <circle cx="282" cy="181" r="2.4" fill="#8a74e8"/>
-  <path d="M246 200q10 10 20 0" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <rect x="222" y="170" width="86" height="14" rx="7" fill="#fff" opacity=".95"/>
+  <rect x="262" y="196" width="46" height="14" rx="7" fill="#fff" opacity=".6"/>
 
   ${KEYS.map(key).join('')}
 

@@ -28,8 +28,8 @@ function faviconSVG(body, screen, spark, bg) {
     `<rect x="4.5" y="7.6" width="19" height="23" rx="5.5" fill="#000" opacity=".28"/>` +
     `<rect x="4.5" y="5.5" width="19" height="23" rx="5.5" fill="${body}"/>` +
     `<rect x="7.4" y="8.8" width="13.2" height="7.2" rx="2.3" fill="${screen}"/>` +
-    `<circle cx="12" cy="11.9" r=".95" fill="${body}"/><circle cx="16" cy="11.9" r=".95" fill="${body}"/>` +
-    `<path d="M12.9 13.5q1.1 1.1 2.2 0" fill="none" stroke="${body}" stroke-width=".9" stroke-linecap="round"/>` +
+    `<rect x="10.6" y="10.6" width="7.8" height="1.6" rx=".8" fill="${body}"/>` +
+    `<rect x="13.8" y="13.1" width="4.6" height="1.6" rx=".8" fill="${body}" opacity=".55"/>` +
     `<g fill="${screen}" opacity=".9">${keys}</g>` +
     `<path d="M25 1c.45 3.5 2.5 5.55 6 6-3.5.45-5.55 2.5-6 6-.45-3.5-2.5-5.55-6-6 3.5-.45 5.55-2.5 6-6z" ` +
     `fill="${spark}" stroke="${bg}" stroke-width="1.6" paint-order="stroke"/></svg>`
